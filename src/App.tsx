@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-      <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Navbar setCurrentPage={setCurrentPage} />
 
       <Routes>
         <Route path="*" element={<NotFound />} />

@@ -6,11 +6,10 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 // Interfaces
 interface Props {
-    currentPage: string;
     setCurrentPage: (page: string) => void;
 }
 
-const Navbar = ({ currentPage, setCurrentPage }: Props) => {
+const Navbar = ({ setCurrentPage }: Props) => {
     const [hamburgerClick, setHamburgerClick] = useState(false);
 
     const CustomLink = ({ to, children, ...props }: any) => {
