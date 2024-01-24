@@ -90,8 +90,8 @@ interface Props {
     }[]) => void;
 }
 
-const Cart = ({ setCurrentPage, cart, setCart }: Props) => {
-    const [productData, setProductData] = useState<MyProps["ProductCart"]>(cart);
+const Cart = ({ setCurrentPage, cart }: Props) => {
+    const [productData] = useState<MyProps["ProductCart"]>(cart);
 
     useEffect(() => {
         // Page Title
