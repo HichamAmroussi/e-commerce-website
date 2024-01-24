@@ -144,13 +144,13 @@ const Product = ({ setCurrentPage, cart, setCart }: Props) => {
 
                             }) */}
                             <SwiperSlide>
-                                <img src={"http://localhost:3000/images/product_images/" + product.Product_image[0].image_path} alt={product.name} />
+                                <img src="https://i.ibb.co/gSNg8yX/weights-2.jpg" alt={product.name} />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src={"http://localhost:3000/images/product_images/" + product.Product_image[1].image_path} alt={product.name} />
+                                <img src="https://i.ibb.co/gSNg8yX/weights-2.jpg" alt={product.name} />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src={"http://localhost:3000/images/product_images/" + product.Product_image[2].image_path} alt={product.name} />
+                                <img src="https://i.ibb.co/gSNg8yX/weights-2.jpg" alt={product.name} />
                             </SwiperSlide>
                         </Swiper>
 

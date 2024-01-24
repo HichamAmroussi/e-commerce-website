@@ -22,7 +22,8 @@ const ProductCard = ({ product }: ProductProps) => {
     return ( 
         <Link to={makeLink()} className="shadow rounded-xl overflow-hidden">
             <figure className="relative pt-[100%]">
-                <img src={"http://localhost:3000/images/product_images/" + product.image_thumbnail} alt={product.name} className="absolute top-0 bottom-0 right-0 left-0 w-full h-full object-contain" />
+                {/*<img src={"http://localhost:3000/images/product_images/" + product.image_thumbnail} alt={product.name} className="absolute top-0 bottom-0 right-0 left-0 w-full h-full object-contain" />*/}
+                <img src="https://i.ibb.co/Rvmtc2m/weights-1.jpg" alt={product.name} className="absolute top-0 bottom-0 right-0 left-0 w-full h-full object-contain" />
             </figure>
             <div className="text-center py-6 px-1 bg-white">
                 <p className="font-medium">{product.name}</p>
