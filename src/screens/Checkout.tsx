@@ -39,7 +39,7 @@ const defaultFormData: FormData = {
     phone_number: "",
 };
 
-const Checkout = ({ setCurrentPage, cart }: Props) => {
+const Checkout = ({ setCurrentPage }: Props) => {
     const [formData, setFormData] = useState(defaultFormData);
     const {first_name, last_name, address, wilaya, phone_number } = formData;
     const [isPending, setIsPending] = useState(false);
