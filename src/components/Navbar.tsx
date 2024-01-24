@@ -7,9 +7,30 @@ import { IoClose } from "react-icons/io5";
 // Interfaces
 interface Props {
     setCurrentPage: (page: string) => void;
+    cart: {
+        product: {
+            id: number;
+            size: string;
+            name: string;
+            description: string;
+            price: number;
+            category: string;
+            image_thumbnail: string;
+            Product_image: {
+                id: number;
+                image_path: string;
+                product_id: number;
+                createdAt: string;
+                updatedAt: string;
+            }[];
+            order_id: number | null;
+            stock: number;
+        };
+        stock: number;
+    }[];
 }
 
-const Navbar = ({ setCurrentPage }: Props) => {
+const Navbar = ({ setCurrentPage, cart }: Props) => {
     const [hamburgerClick, setHamburgerClick] = useState(false);
 
     const CustomLink = ({ to, children, ...props }: any) => {
@@ -36,16 +57,16 @@ const Navbar = ({ setCurrentPage }: Props) => {
     return ( 
         <header className="bg-white fixed z-20 shadow-sm w-full">
             <nav 
-                className="py-4 max-w-9xl container mx-auto md:flex md:items-center md:justify-between">
+                className=" max-w-9xl container mx-auto py-2 xl:py-4 md:flex md:items-center md:justify-between">
                     
                 {/* Logo */}
                 <div className="flex items-center">
-                    <span className="text-3xl block cursor-pointer mx-0 md:mx-2 md:hidden" onClick={handleClick}>
+                    <span className="text-3xl block cursor-pointer mx-2 md:hidden" onClick={handleClick}>
                         {hamburgerClick? <IoClose /> : <GiHamburgerMenu />}
                     </span>
 
                     <Link to="/">
-                        <img className="h-20 inline" src="/logo.png" alt="Website Logo" />
+                        <img className="h-[70px] inline px-2 xl:h-20 md:px-0" src="/logo.png" alt="Website Logo" />
                     </Link>
                 </div>
 
@@ -60,9 +81,9 @@ const Navbar = ({ setCurrentPage }: Props) => {
                 </ul>
 
                 {/* Cart */}
-                <Link to="/cart" className="gap-1.5 flex absolute top-[38px] right-6 md:static md:mx-10">
+                <Link to="/cart" className="gap-1.5 flex absolute top-[32px] right-6 md:static md:mx-10">
                     <FiShoppingCart className="text-2xl" />
-                    <div className="bg-black text-white rounded-full px-2">0</div>
+                    <div className="bg-black text-white rounded-full px-2">{cart.length}</div>
                 </Link>
             </nav>
         </header>

@@ -30,7 +30,7 @@ interface Props {
 const Shop = ({ setCurrentPage }: Props) => {
     const [searchParams] = useSearchParams();
     const [query, setQuery] = useState(searchParams.get("category"));
-    const [products, isPending] = useFetch<Product[]>(!query ? `http://localhost:3000/shop` : query !== "All" ? `http://localhost:3000/shop/products/${query.replace(/ /g, "-")}` : "http://localhost:3000/shop", []);
+    const [products, isPending] = useFetch<Product[]>(!query ? `https://e-commerce-api-3m42.onrender.com/shop` : query !== "All" ? `https://e-commerce-api-3m42.onrender.com/shop/products/${query.replace(/ /g, "-")}` : "https://e-commerce-api-3m42.onrender.com/shop", []);
     const [activeButton, setActiveButton] = useState<number>(1);
 
     const buttons: ButtonProps[] = [
@@ -58,10 +58,10 @@ const Shop = ({ setCurrentPage }: Props) => {
 
 
     return ( 
-        <main className="min-h-screen py-36 bg-gray-50">
+        <main className="min-h-screen py-28 mx-2 bg-gray-50 xl:py-36 md:py-30 md:mx-0">
             <div className="max-w-9xl container mx-auto">
                 <h2 className="text-3xl font-bold my-[31px]">Product category</h2>
-                <ul className="flex gap-1.5">
+                <ul className="flex gap-1 md:gap-1.5">
                     {buttons.map((button) => (
                         <CategoryBtn
                             key={button.id}
@@ -73,7 +73,7 @@ const Shop = ({ setCurrentPage }: Props) => {
                     ))}
                 </ul>
 
-                <main className="my-12 grid grid-cols-2 gap-x-2.5 gap-y-3 xl:grid-cols-4 xl:gap-x-8 xl:gap-y-3 md:grid-cols-3 md:my-14">
+                <main className="my-8 grid grid-cols-2 gap-x-2.5 gap-y-3 xl:grid-cols-4 xl:gap-x-8 xl:gap-y-3 md:grid-cols-3 md:my-14">
                     {isPending && (
                         <div className="min-h-full w-full flex justify-center col-span-4">
                             <div className="loading-animation"></div>

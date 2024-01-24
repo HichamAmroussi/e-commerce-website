@@ -24,18 +24,62 @@ interface Product {
         createdAt: string;
         updatedAt: string;
     }[];
-    isSold: boolean;
     order_id: number | null;
     stock: number;
 };
 interface Props {
     setCurrentPage: (page: string) => void;
+    cart: {
+        product: {
+            id: number;
+            size: string;
+            name: string;
+            description: string;
+            price: number;
+            category: string;
+            image_thumbnail: string;
+            Product_image: {
+                id: number;
+                image_path: string;
+                product_id: number;
+                createdAt: string;
+                updatedAt: string;
+            }[];
+            order_id: number | null;
+            stock: number;
+        };
+        stock: number;
+    }[];
+    setCart: (cart: {
+        product: {
+            id: number;
+            size: string;
+            name: string;
+            description: string;
+            price: number;
+            category: string;
+            image_thumbnail: string;
+            Product_image: {
+                id: number;
+                image_path: string;
+                product_id: number;
+                createdAt: string;
+                updatedAt: string;
+            }[];
+            order_id: number | null;
+            stock: number;
+        };
+        stock: number;
+    }[]) => void;
 }
 
-const Product = ({ setCurrentPage }: Props) => {
+const Product = ({ setCurrentPage, cart, setCart }: Props) => {
     const productID = window.location.pathname.slice(10);
-    const [product, isPending] = useFetch<Product>(`http://localhost:3000/shop/product/${productID}`, {} as Product);
+    const [product, isPending] = useFetch<Product>(`https://e-commerce-api-3m42.onrender.com/shop/product/${productID}`, {} as Product);
     const [stock, setStock] = useState("1");
+    const cartIds:number[] = [];
+
+    cart.forEach((obj) => cartIds.push(obj.product.id));
 
     const handleStockChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStock(e.target.value);
@@ -44,7 +88,30 @@ const Product = ({ setCurrentPage }: Props) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        
+        if(Number(stock) <= product.stock) {
+            if(cartIds.includes(product.id)) {
+                let newCart = [...cart];
+
+                cart.forEach((item, index) => {
+                    if(item.product.id === product.id && cart[index].stock + Number(stock) <= product.stock) {
+                        newCart[index] = {
+                            product: product,
+                            stock: cart[index].stock + Number(stock)
+                        }
+
+                        setCart(newCart);
+                        alert("Product Added to Cart!");
+                    } else if(cart[index].stock + Number(stock) > product.stock) {
+                        alert("Not enough products in stock");
+                    }
+                })
+            } else {
+                setCart([...cart, {product: product, stock: Number(stock)}]);
+                alert("Product Added to Cart!");
+            }
+        } else {
+            alert("Not enough products in stock");
+        }
     }
     
     useEffect(() => {
@@ -52,7 +119,7 @@ const Product = ({ setCurrentPage }: Props) => {
     }, [product])
 
     return ( 
-        <main className="min-h-screen py-40 max-w-9xl container mx-auto">
+        <main className="min-h-screen py-40 max-w-9xl container mx-4 md:mx-0">
             {isPending && (
                 <div className="min-h-full w-full flex justify-center col-span-2">
                     <div className="loading-animation"></div>
@@ -61,7 +128,7 @@ const Product = ({ setCurrentPage }: Props) => {
 
             {!isPending && product &&
                 (
-                    <div className="grid grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-8">
                         <Swiper
                             loop={true}
                             centeredSlides={true}
@@ -94,11 +161,10 @@ const Product = ({ setCurrentPage }: Props) => {
                             <p>Size: <span className="text-xl font-medium">{product.size} Kg</span></p>
                             <div className="flex items-center gap-36">
                                 <p className="text-md">Price: <span className="text-xl text-[#b88476] font-medium">{product.price} DA</span></p>
-                                {product.stock ? <p className="text-sm text-gray-500">IN STOCK</p> : ""}
+                                {product.stock > 0 ? <p className="text-sm text-gray-500">IN STOCK</p> : <p className="text-sm text-gray-500">OUT OF STOCK</p>}
                             </div>
 
-                            <form className="flex items-stretch gap-36 h-14 mt-8" onSubmit={handleSubmit}>
-                                <button className="font-bold text-white text-sm bg-[#b88476] px-12 py-4 duration-100 hover:bg-[#d6a395]">ADD TO CART</button>
+                            <form className="h-14 mt-8 flex flex-col gap-8 md:items-stretch md:flex-row md:gap-36" onSubmit={handleSubmit}>
                                 <div className="flex gap-4 items-center">
                                     <label htmlFor="qty" className="font-bold text-sm text-gray-600">QTY</label>
                                     <input 
@@ -112,6 +178,7 @@ const Product = ({ setCurrentPage }: Props) => {
                                         required
                                     />
                                 </div>
+                                <button className="w-full font-bold text-white text-sm bg-[#b88476] px-12 py-4 duration-100 hover:bg-[#d6a395] md:w-auto">ADD TO CART</button>
                             </form>
                         </div>
                     </div>

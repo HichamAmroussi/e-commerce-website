@@ -10,6 +10,7 @@ input[type=number]::-webkit-inner-spin-button {
 /*---------------------------------- Swiper -----------------------------------------*/
 .swiper {
     width: 100%;
+    max-width: 100%;
     height: 100%;
 }
 .swiper-slide {
@@ -19,5 +20,6 @@ input[type=number]::-webkit-inner-spin-button {
 .swiper-slide img {
     display: block;
     width: 100%;
+    max-width: 100%;
     object-fit: cover;
 }
